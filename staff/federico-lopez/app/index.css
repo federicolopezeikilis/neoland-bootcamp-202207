@@ -88,6 +88,12 @@ body {
 
 .main {
     overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
 }
 
 .list {
