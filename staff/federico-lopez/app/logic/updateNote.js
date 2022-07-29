@@ -29,7 +29,13 @@ function updateNote(token, noteId, text, callback) {
 
             const note = notes.find(note => note.id === noteId)
 
-            note.text = text 
+            if (!note) {
+                callback(new Error(`note with id ${noteId} not found`))
+
+                return
+            }
+
+            note.text = text
 
             const xhr2 = new XMLHttpRequest
 
