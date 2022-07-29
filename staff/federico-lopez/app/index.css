@@ -28,6 +28,10 @@ body {
     gap: 10px;
 }
 
+.container--distributed {
+    justify-content: space-between;
+}
+
 .header {
     display: flex;
 }
@@ -98,6 +102,12 @@ body {
 
 .main::-webkit-scrollbar {
     display: none;
+}
+
+.menu {
+    position: fixed;
+    background-color: dodgerblue;
+    width: 100%;
 }
 
 .list {
