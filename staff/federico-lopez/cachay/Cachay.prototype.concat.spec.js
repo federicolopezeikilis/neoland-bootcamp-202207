@@ -38,6 +38,7 @@ describe('concat', function () {
         const cachay3 = new Cachay(5, 6)
         const result = cachay1.concat(cachay2, cachay3)
         
+        
         expect(result).to.be.instanceof(Cachay)
         expect(result.length).to.equal(cachay1.length + cachay2.length + cachay3.length)
         expect(result[0]).to.equal(cachay1[0])
