@@ -1,16 +1,14 @@
-class Login {
+class LoginPage extends NavigableForm {
     constructor() {
-        const temp = document.createElement('temp')
-
-        temp.innerHTML = `<main class="login-page container container--spaced">
+        super(`<main class="login-page container container--full container--spaced">
             <form class="form" action="https://www.google.com/search" method="get">
                 <div class="form__field">
-                    <label for="email">email</label>
+                    <label for="email">E-mail</label>
                     <input class="input" type="email" name="email" placeholder="email" id="email">
                 </div>
 
                 <div class="form__field">
-                    <label for="password">password</label>
+                    <label for="password">Password</label>
                     <input class="input" type="password" name="password" placeholder="password" id="password">
                 </div>
 
@@ -18,33 +16,19 @@ class Login {
             </form>
 
             <a class="anchor" href="register.html">Register</a>
-        </main>`
-        
-        this.container = temp.firstChild        
+        </main>`)
     }
 
-    onLinkClick(callback) {
-        this.container.querySelector('.anchor').onclick = event => {
-            event.preventDefault()
-
-            callback()
-        }
-    }
-
-    onFormSubmit(callback) {
+    onFormSubmit(callback) { // override
         const form = this.container.querySelector('form')
 
         form.onsubmit = function (event) {
             event.preventDefault()
-        
+
             const email = form.email.value
             const password = form.password.value
-        
+
             callback(email, password)
         }
-    }
-
-    reset() {
-        this.container.querySelector('form').reset()
     }
 }
