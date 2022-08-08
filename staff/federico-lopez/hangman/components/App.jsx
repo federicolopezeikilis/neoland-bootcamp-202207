@@ -20,22 +20,15 @@ class App extends React.Component {
 
         // VERIFICO SI EL CARACTER ESTÁ EN EL RESULTADO
         if (this.state.result.includes(charTried)) {
-            const indexes = []
-            
-            // GUARDO LOS ÍNDICES EN LOS QUE EL CARACTER SE ENCUENTRA EN EL RESULTADO
-            for (let i = 0; i < this.state.result.length; i++)
-                if (this.state.result[i] === charTried)
-                    indexes.push(i)
-
             // TRANSFORMO LA PALABRA MOSTRADA EN ARRAY
             let newWordShown = this.state.wordShown.split('')
 
-            // CAMBIO LOS "_" POR LA LETRA ELEGIDA
-            indexes.forEach(index => {
-                newWordShown[index] = charTried
-            })
+            // LOCALIZO LOS ÍNDICES EN LOS QUE ESTÁ EL CARACTER Y MODIFICO LA PALABRA MOSTRADA EN ESOS ÍNDICES
+            for (let i = 0; i < this.state.result.length; i++)
+                if (this.state.result[i] === charTried)
+                    newWordShown[i] = charTried
 
-            // MODIFICO FINALMENTE EL ESTADO
+            // MODIFICO EL ESTADO
             this.setState({ wordShown: newWordShown.join('')})
 
         } else {
