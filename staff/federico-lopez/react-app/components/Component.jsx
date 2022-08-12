@@ -7,7 +7,7 @@ class Component extends React.Component {
         this.logger.info('constructor')
     }
 
-    setState(state) { // override
+    setState(state) {
         this.logger.info('set state')
 
         this.logger.debug(`state: ${JSON.stringify(state)}`)
@@ -17,7 +17,7 @@ class Component extends React.Component {
         //this.logger.debug('after set state')
     }
 
-    componentDidMount() { // not override
+    componentDidMount() {
         this.logger.info('component did mount')
     }
 }
