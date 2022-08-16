@@ -1,26 +1,41 @@
-class Header extends Component {
-    constructor(props) {
-        super(props)
+//const useState = React.useState
+const { useState } = React
 
-        this.state = { view: null }
+function Header({ name, onLogoutClick, onSettingsClick, view: viewHome }) {
+    const logger = new Loggito('Header')
+
+    const [view, setView] = useState(null) // [null, f () {}]
+
+    const handleMenuClick = () => {
+        setView('menu')
+
+        logger.debug('setView', 'menu')
     }
 
-    handleMenuClick = () => this.setState({ view: 'menu' })
-
-    handleCloseClick = () => this.setState({ view: null })
-
-    render() {
-        this.logger.info('render')
-        
-        return <header className="header container">
-            <div className="header-top container container--row container--distributed">
-                <h1 className="title">Hello, {this.props.name}!</h1>
-                
-                { this.state.view === null && <IconButton text="menu" onClick={this.handleMenuClick} />}
-                { this.state.view === 'menu' && <IconButton text="close" onClick={this.handleCloseClick} />}
-            </div>
-
-            { this.state.view === 'menu' && <Menu onLogoutClick={this.props.onLogoutClick} />}
-        </header>
+    const handleCloseClick = () => {
+        setView(null)
+    
+        logger.debug('setView', null)
     }
+
+    const handleSettingsClick = () => {
+        setView(null)
+
+        logger.debug('setView', null)
+
+        onSettingsClick()
+    }
+
+    logger.info('render')
+
+    return <header className="Header container">
+        <div className="container container--row container--distributed">
+            <h1 className="title">Hello, {name}!</h1>
+
+            {view === null && <IconButton text="menu" onClick={handleMenuClick} />}
+            {view === 'menu' && <IconButton text="close" onClick={handleCloseClick} />}
+        </div>
+
+        {view === 'menu' && <Menu onLogoutClick={onLogoutClick} onSettingsClick={handleSettingsClick} view={viewHome} />}
+    </header>
 }
