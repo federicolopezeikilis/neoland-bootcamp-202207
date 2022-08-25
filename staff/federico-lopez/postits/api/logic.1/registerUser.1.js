@@ -1,8 +1,7 @@
 const { writeFile, readdir, readFile } = require('fs')
-const { validateString } = require('validators')
 
 function registerUser(name, email, password, callback) {
-    validateString(number)
+    // TODO validate inputs
 
     try {
         readdir('./data/users', (error, files) => {
