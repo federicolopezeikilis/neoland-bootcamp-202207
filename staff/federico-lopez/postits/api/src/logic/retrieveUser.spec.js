@@ -1,6 +1,6 @@
-const { connect, disconnect } = require('mongoose')
+const { connect, disconnect, Types: { ObjectId } } = require('mongoose')
 const { User } = require('../models')
-const { NotFoundError, AuthError } = require('../errors')
+const { NotFoundError } = require('../errors')
 const { retrieveUser } = require('.')
 
 describe('retrieveUser', () => {
@@ -15,40 +15,25 @@ describe('retrieveUser', () => {
 
         return User.create({ name, email, password })
             .then(user =>
-                retrieveUser(user._id)
+                retrieveUser(user.id)
                     .then(user => {
+                        expect(user).toBeDefined()
                         expect(user.name).toEqual(name)
                         expect(user.email).toEqual(email)
+
                         expect(user.password).toBeUndefined()
-                        expect(user.__v).toBeUndefined()
                     })
             )
     })
 
     it('fails on non-existing user', () => {  // unhappy path
-        const email = 'pepito@grillo.com'
-        const password = '123123123'
+        const userId = new ObjectId().toString()
 
-        return retrieveUser(email, password)
+        return retrieveUser(userId)
             .catch(error => {
                 expect(error).toBeInstanceOf(NotFoundError)
-                expect(error.message).toEqual(`user with email ${email} not found`)
+                expect(error.message).toEqual(`user with id ${userId} not found`)
             })
-    })
-
-    it('fails on existing user but wrong password', () => {  // unhappy path
-        const name = 'Pepito Grillo'
-        const email = 'pepito@grillo.com'
-        const password = '123123123'
-
-        return User.create({ name, email, password })
-            .then(user =>
-                retrieveUser(email, password + '-wrong')
-                    .catch(error => {
-                        expect(error).toBeInstanceOf(AuthError)
-                        expect(error.message).toEqual('wrong password')
-                    })
-            )
     })
 
     afterAll(() => disconnect())

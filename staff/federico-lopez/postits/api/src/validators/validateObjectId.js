@@ -1,6 +1,7 @@
-const { Types: { ObjectId: { isValid } } } = require('mongoose')
-const { AuthError } = require('../errors')
+const { Types: { ObjectId }} = require('mongoose')
 
-module.exports = userId => {
-    if(!isValid(userId)) throw new AuthError('invalid userId')
+function validateObjectId(objectId, explain = 'Object Id') {
+    if (!ObjectId.isValid(objectId)) throw new FormatError(`${explain} is not valid`)
 }
+
+module.exports = validateObjectId

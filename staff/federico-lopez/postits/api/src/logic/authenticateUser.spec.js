@@ -27,6 +27,9 @@ describe('authenticateUser', () => {
         const password = '123123123'
 
         return authenticateUser(email, password)
+            .then(() => {
+                fail('it should not reach here');
+            })
             .catch(error => {
                 expect(error).toBeInstanceOf(NotFoundError)
                 expect(error.message).toEqual(`user with email ${email} not found`)
@@ -40,7 +43,10 @@ describe('authenticateUser', () => {
 
         return User.create({ name, email, password })
             .then(user =>
-                authenticateUser(email, password + '-wrong')
+                authenticateUser(email, password)
+                    .then(() => {
+                        throw new Error('it should not reach this point')
+                    })
                     .catch(error => {
                         expect(error).toBeInstanceOf(AuthError)
                         expect(error.message).toEqual('wrong password')

@@ -3,9 +3,8 @@ const express = require('express')
 const { DuplicityError, NotFoundError, AuthError, FormatError, SystemError } = require('./errors')
 const { registerUser, authenticateUser, retrieveUser } = require('./logic')
 const logger = require('./logger')(module)
-const { sign, verify, JsonWebTokenError, TokenExpiredError, NotBeforeError } = require('jsonwebtoken')
-
-debugger
+const { sign, JsonWebTokenError, TokenExpiredError, NotBeforeError } = require('jsonwebtoken')
+const { verifyToken } = require('./helpers')
 
 connect('mongodb://localhost:27017/postits')
     .then(() => {
@@ -73,13 +72,7 @@ connect('mongodb://localhost:27017/postits')
 
         api.get('/api/users', (req, res) => {
             try {
-                const { headers: { authorization } } = req
-
-                const token = authorization.substring(7)
-
-                const payload = verify(token, 'Dan: copié el código de Mónica!')
-
-                const { sub: userId } = payload
+                const userId = verifyToken(req)
 
                 retrieveUser(userId)
                     .then(user => res.json(user))
@@ -96,12 +89,20 @@ connect('mongodb://localhost:27017/postits')
             } catch (error) {
                 if (error instanceof TypeError || error instanceof FormatError)
                     res.status(400).json({ error: error.message })
-                else if(error instanceof JsonWebTokenError || error instanceof TokenExpiredError || error instanceof NotBeforeError)
-                    res.status(401).json({ error: 'token not valid'})
+                else if (error instanceof JsonWebTokenError || error instanceof TokenExpiredError || error instanceof NotBeforeError)
+                    res.status(401).json({ error: 'token not valid' })
                 else
                     res.status(500).json({ error: 'system error' })
 
                 logger.error(error)
+            }
+        })
+        
+        api.post('/api/notes', (req, res) => {
+            try {
+                const userId = verifyToken(req)
+            } catch(error) {
+                
             }
         })
 
