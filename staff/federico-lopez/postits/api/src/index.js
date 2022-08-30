@@ -102,8 +102,13 @@ connect('mongodb://localhost:27017/postits')
             try {
                 const userId = verifyToken(req)
             } catch(error) {
-                
+
             }
+        })
+
+        //updateNote
+        api.patch('/api/notes/:noteId', jsonBodyParser, (req, res) => {
+            const { params: { noteId }} = req
         })
 
         api.listen(8080, () => logger.info('api started'))
