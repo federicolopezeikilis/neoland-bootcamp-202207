@@ -1,7 +1,10 @@
+const { validateText } = require('../validators')
 const { verify } = require('jsonwebtoken')
 
-module.exports = req => {
+function verifyToken(req) {
     const { headers: { authorization } } = req
+
+    validateText(authorization, 'authorization')
 
     const token = authorization.substring(7)
 
@@ -11,3 +14,5 @@ module.exports = req => {
 
     return userId
 }
+
+module.exports = verifyToken

@@ -8,8 +8,8 @@
     "test": "npx jest --runInBand --setTimeout=60000",
     "test-inspect": "node --inspect ./node_modules/jest/bin/jest.js --runInBand --setTimeout=60000",
     "test-inspect-brk": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --setTimeout=60000",
-    "test-inspect-cli": "node inspect ./node_modules/.bin/jest --runInBand --setTimeout=60000.js",
-    "test-coverage": "npx jest --runInBand --setTimeout=60000 --collectCoverage.js",
+    "test-inspect-cli": "node inspect ./node_modules/jest/bin/jest.js --runInBand --setTimeout=60000",
+    "test-coverage": "npx jest --runInBand --setTimeout=60000 --collectCoverage",
     "populate": "node src/populate.js",
     "populate-inspect": "node --inspect-brk src/populate.js",
     "populate-inspect-cli": "node inspect src/populate.js"

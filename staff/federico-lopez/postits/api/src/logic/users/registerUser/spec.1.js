@@ -1,7 +1,7 @@
 const { connect, disconnect } = require('mongoose')
-const { User } = require('../models')
-const { DuplicityError } = require('../errors')
-const { registerUser } = require('.')
+const { User } = require('../../../models')
+const { DuplicityError } = require('../../../errors')
+const registerUser = require('.')
 
 describe('registerUser', () => {
     beforeAll(() => connect('mongodb://localhost:27017/postits-test'))

@@ -1,6 +1,6 @@
-const { User } = require('../models')
-const { DuplicityError, SystemError } = require('../errors')
-const { validateText, validateEmail, validatePassword } = require('../validators')
+const { User } = require('../../../models')
+const { DuplicityError, SystemError } = require('../../../errors')
+const { validateText, validateEmail, validatePassword } = require('../../../validators')
 
 function registerUser(name, email, password) {
     validateText(name, 'name')
@@ -8,7 +8,7 @@ function registerUser(name, email, password) {
     validatePassword(password)
 
     return User.create({ name, email, password })
-        .then(() => {})
+        .then(user => {})
         .catch(error => {
             if (error.code === 11000)
                 throw new DuplicityError('user already exists')

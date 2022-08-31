@@ -1,7 +1,7 @@
 const { connect, disconnect } = require('mongoose')
-const { User } = require('../models')
-const { NotFoundError, AuthError } = require('../errors')
-const { authenticateUser } = require('.')
+const { User } = require('../../../models')
+const { NotFoundError, AuthError } = require('../../../errors')
+const authenticateUser = require('.')
 
 describe('authenticateUser', () => {
     beforeAll(() => connect('mongodb://localhost:27017/postits-test'))
@@ -27,9 +27,6 @@ describe('authenticateUser', () => {
         const password = '123123123'
 
         return authenticateUser(email, password)
-            .then(() => {
-                fail('it should not reach here');
-            })
             .catch(error => {
                 expect(error).toBeInstanceOf(NotFoundError)
                 expect(error.message).toEqual(`user with email ${email} not found`)
@@ -43,10 +40,7 @@ describe('authenticateUser', () => {
 
         return User.create({ name, email, password })
             .then(user =>
-                authenticateUser(email, password)
-                    .then(() => {
-                        throw new Error('it should not reach this point')
-                    })
+                authenticateUser(email, password + '-wrong')
                     .catch(error => {
                         expect(error).toBeInstanceOf(AuthError)
                         expect(error.message).toEqual('wrong password')
