@@ -32,7 +32,6 @@ describe('updateNoteText', () => {
 
                 })
             )
-
     })
 
     it('fails on note that does not belong to the user', () => {
