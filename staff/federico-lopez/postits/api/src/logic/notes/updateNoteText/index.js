@@ -1,11 +1,11 @@
 const { NotFoundError, AuthError } = require("../../../errors")
 const { User, Note } = require("../../../models")
-const { verifyObjectId } = require("../../../utils")
+const { verifyObjectIdString } = require("../../../utils")
 const { validateString } = require("../../../validators")
 
 module.exports = function updateNoteText(userId, noteId, text) {
-    verifyObjectId(userId)
-    verifyObjectId(noteId)
+    verifyObjectIdString(userId)
+    verifyObjectIdString(noteId)
     validateString(text)
 
     return User.findById(userId)

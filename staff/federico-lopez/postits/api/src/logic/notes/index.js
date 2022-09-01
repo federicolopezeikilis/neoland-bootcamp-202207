@@ -1,3 +1,5 @@
 module.exports = {
-    createNote: require('./createNote')
+    createNote: require('./createNote'),
+    retrieveNotes: require('./retrieveNotes'),
+    updateNoteText: require('./updateNoteText')
 }
